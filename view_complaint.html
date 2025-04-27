@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Complaint - Amrit Yatra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #003087;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2rem;
+        }
+        nav {
+            background-color: #ff9933;
+            padding: 10px;
+            padding-left: 37%;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: whitesmoke;
+            border-radius: 15px solid black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .complaint-details {
+            margin-bottom: 15px;
+        }
+        .complaint-details label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+        .status-active {
+            color: green;
+            font-weight: bold;
+        }
+        button {
+            background-color: #003087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff9933;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #003087;
+            color: white;
+            position: fixed;
+            bottom: 10;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+            .complaint-details label {
+                width: 100%;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Amrit Yatra</h1>
+        <p>View Your Complaint</p>
+    </header>
+    <nav>
+        <a href="/track_complaint">Track Complaint</a>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+    </nav>
+    <div class="container">
+        <h2>Complaint Details</h2>
+        <div class="complaint-details">
+            <label>Complaint Code:</label>
+            <span id="code"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Name:</label>
+            <span id="name"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Address:</label>
+            <span id="address"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Phone:</label>
+            <span id="phone"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Issue:</label>
+            <span id="issue"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Details:</label>
+            <span id="details"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Date:</label>
+            <span id="date"></span>
+        </div>
+        <div class="complaint-details">
+            <label>Status:</label>
+            <span id="status" class="status-active"></span>
+        </div>
+        <button id="downloadButton" style="display: none;">Download Complaint</button>
+    </div>
+    <footer>
+        <p>© 2025 Amrit Yatra, Government of India</p>
+    </footer>
+    <script>
+        // Extract code from URL
+        const code = window.location.pathname.split('/').pop();
+        if (code) {
+            fetch(`/get_complaint/${code}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Complaint not found.');
+                        return;
+                    }
+                    document.getElementById('code').textContent = data.code;
+                    document.getElementById('name').textContent = data.name;
+                    document.getElementById('address').textContent = data.address;
+                    document.getElementById('phone').textContent = data.phone;
+                    document.getElementById('issue').textContent = data.issue;
+                    document.getElementById('details').textContent = data.details;
+                    document.getElementById('date').textContent = data.date;
+                    document.getElementById('status').textContent = data.status;
+
+                    // Show download button and set onclick
+                    const downloadButton = document.getElementById('downloadButton');
+                    downloadButton.style.display = 'block';
+                    downloadButton.onclick = () => {
+                        const content = `
+Amrit Yatra Complaint
+Complaint Code: ${data.code}
+Name: ${data.name}
+Address: ${data.address}
+Phone: ${data.phone}
+Issue: ${data.issue}
+Details: ${data.details}
+Date: ${data.date}
+Status: ${data.status}
+                        `;
+                        const blob = new Blob([content], { type: 'text/plain' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `complaint_${data.code}.txt`;
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    };
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load complaint.');
+                });
+        } else {
+            alert('No complaint code provided.');
+        }
+    </script>
+</body>
+</html>

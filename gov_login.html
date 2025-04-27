@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Login - Amrit Yatra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #003087;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        nav {
+            background-color: #ff9933;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: whitesmoke;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #003087;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff9933;
+        }
+
+        .warning {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #003087;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Amrit Yatra - Government Login</h1>
+    </header>
+    <nav>
+        <a href="/track_complaint">Track Complaint</a>
+        <a href="/">Home</a>
+        <a href="/login">User Login</a>
+    </nav>
+    <div class="container">
+        <form action="/gov_login" method="POST" id="loginForm" onsubmit="return validateLogin(event)">
+            <div id="warning" class="warning" style="display: none;"></div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <footer>
+        <p>© 2025 Amrit Yatra, Government of India</p>
+    </footer>
+    <script>
+        // Valid username-password pairs from the image
+        const validCredentials = {
+            'gp1@gram.ac.in': 'Gp01gram',
+            'gp2@gram.ac.in': 'Gp02gram',
+            'gp3@gram.ac.in': 'Gp03gram',
+            'gp4@gram.ac.in': 'Gp04gram',
+            'gp5@gram.ac.in': 'Gp05gram'
+        };
+
+        // Validate login credentials
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const warning = document.getElementById('warning');
+
+            // Check if credentials match
+            if (validCredentials[username] && validCredentials[username] === password) {
+                warning.style.display = 'none'; // Hide warning if valid
+                // Redirect to gov_dashboard.html after client-side validation
+                window.location.href = '/gov_dashboard'; // Server will serve gov_dashboard.html
+                return false; // Prevent form submission (handled by redirect)
+            } else {
+                warning.textContent = 'Invalid username or password';
+                warning.style.display = 'block'; // Show warning if invalid
+                return false; // Prevent form submission for invalid credentials
+            }
+        }
+
+        // Check for server-side error query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'invalid') {
+            const warning = document.getElementById('warning');
+            warning.textContent = 'Invalid username or password';
+            warning.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP Portal - View Complaints</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #e6ffe6, #b3ffb3);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* News Ticker */
+    .news-ticker {
+      background: #006600;
+      color: white;
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 20;
+      overflow: hidden;
+      font-size: 1rem;
+    }
+    .news-ticker marquee {
+      width: 100%;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #006600, #009933);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 60px; /* Adjusted for news ticker height */
+      z-index: 10;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+    .header p {
+      margin: 5px 0 0;
+      font-size: 1.1rem;
+    }
+
+    /* Complaints Container */
+    .complaints-container {
+      max-width: 1200px;
+      margin: 100px auto 40px; /* Adjusted margin-top for news ticker and header */
+      padding: 0 20px;
+      flex-grow: 1;
+    }
+
+    /* Table Styles */
+    .complaints-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .complaints-table:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+    .complaints-table th, .complaints-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .complaints-table th {
+      background: #006600;
+      color: white;
+      font-size: 1.2rem;
+    }
+    .complaints-table tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .complaints-table tr:hover {
+      background: #e6ffe6;
+    }
+
+    /* Footer */
+    .footer {
+      background: #006600;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      transition: transform 0.5s ease;
+    }
+    .footer.slide-up {
+      transform: translateY(0);
+    }
+    .footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .complaints-container {
+        margin: 100px 10px 40px;
+        padding: 0 10px;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
+      .news-ticker {
+        font-size: 0.9rem;
+      }
+      .complaints-table th, .complaints-table td {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+    }
+
+    /* Scroll Animation */
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- News Ticker -->
+  <div class="news-ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      Latest Indian Sanitation News: 
+      Government launches Swachh Bharat Mission 2.0 to improve rural sanitation | 
+      Tamil Nadu achieves 100% ODF status in rural areas | 
+      New water purification plants installed in 50 Gujarat villages | 
+      Maharashtra allocates ₹500 crore for sanitation infrastructure
+    </marquee>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>GP Portal</h1>
+    <p>View Complaints</p>
+  </div>
+
+  <!-- Complaints Container -->
+  <div class="complaints-container">
+    <table class="complaints-table" id="complaintsTable">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Issue</th>
+          <th>Details</th>
+          <th>Date</th>
+          <th>Code</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="complaintsBody">
+        <!-- Complaints will be populated here via JavaScript or server-side -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 GP Portal. All rights reserved.</p>
+  </div>
+
+  <script>
+    // Footer slide-up animation on scroll
+    window.addEventListener('scroll', () => {
+      const footer = document.querySelector('.footer');
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      if (scrollPosition > documentHeight - 50) {
+        footer.classList.add('slide-up');
+        footer.style.animation = 'slideUp 0.5s ease forwards';
+      }
+    });
+
+    // Fetch complaints from server and populate table
+    function loadComplaints() {
+      fetch('/get_complaints')
+        .then(response => response.json())
+        .then(data => {
+          const tbody = document.getElementById('complaintsBody');
+          tbody.innerHTML = ''; // Clear existing rows
+          data.forEach((complaint, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${complaint.name}</td>
+              <td>${complaint.address}</td>
+              <td>${complaint.phone}</td>
+              <td>${complaint.issue}</td>
+              <td>${complaint.details}</td>
+              <td>${complaint.date}</td>
+              <td>${complaint.code}</td>
+              <td>${complaint.status}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching complaints:', error);
+          const tbody = document.getElementById('complaintsBody');
+          tbody.innerHTML = '<tr><td colspan="9">Error loading complaints. Check console for details.</td></tr>';
+        });
+    }
+
+    // Load complaints when page loads
+    window.onload = loadComplaints;
+  </script>
+</body>
+</html>

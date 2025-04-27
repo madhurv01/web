@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Supply Status - Amrit Yatra Portal</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+      animation: ripple 10s infinite;
+    }
+    .header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    /* Selection Section */
+    .selection {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+      transition: transform 0.3s ease;
+    }
+    .selection:hover {
+      transform: scale(1.02);
+    }
+    .selection h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .selection select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #3498db;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .selection select:focus {
+      border-color: #2980b9;
+      outline: none;
+    }
+    .selection button {
+      display: block;
+      width: 200px;
+      margin: 0 auto;
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .selection button:hover {
+      background: #2980b9;
+      transform: translateY(-3px);
+    }
+
+    /* Status Section (Hidden Initially) */
+    .status {
+      display: none;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 1s ease forwards;
+    }
+    .status h2 {
+      color: #2c3e50;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+    }
+    .status h2::after {
+      content: '';
+      width: 50px;
+      height: 3px;
+      background: #3498db;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding: 15px;
+      background: #ecf0f1;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .status-item:hover {
+      transform: translateX(10px);
+    }
+    .status-item i {
+      font-size: 2rem;
+      color: #3498db;
+      margin-right: 20px;
+    }
+    .status-item div {
+      flex-grow: 1;
+    }
+    .status-item strong {
+      display: block;
+      font-size: 1.2rem;
+      color: #2c3e50;
+    }
+    .status-item p {
+      margin: 5px 0 0;
+      color: #7f8c8d;
+    }
+
+    /* Buffering Animation */
+    .buffering {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border: 8px solid #3498db;
+      border-top: 8px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 100;
+    }
+
+    /* Footer */
+    .footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      transition: transform 0.5s ease;
+    }
+    .footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes ripple {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>Water Supply Status</h1>
+  </div>
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Selection Section -->
+    <div class="selection">
+      <h2>Select Your Location</h2>
+      <select id="state" onchange="updateDistricts()">
+        <option value="" disabled selected>Select State</option>
+        <option value="karnataka">Karnataka</option>
+        <option value="maharashtra">Maharashtra</option>
+        <option value="tamilnadu">Tamil Nadu</option>
+      </select>
+      <select id="district" disabled>
+        <option value="" disabled selected>Select District</option>
+      </select>
+      <button onclick="fetchStatus()">Get Status</button>
+    </div>
+
+    <!-- Status Section -->
+    <div class="status" id="status">
+      <h2>Water Supply Status</h2>
+      <div class="status-item">
+        <i class="fas fa-water"></i>
+        <div>
+          <strong>Water Quality Index</strong>
+          <p id="wqi">Calculating...</p>
+        </div>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-river"></i>
+        <div>
+          <strong>River Source</strong>
+          <p id="river">Fetching...</p>
+        </div>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-flask"></i>
+        <div>
+          <strong>pH Level</strong>
+          <p id="ph">Measuring...</p>
+        </div>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-cloud-rain"></i>
+        <div>
+          <strong>Rain Update</strong>
+          <p id="rain">Updating...</p>
+        </div>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-newspaper"></i>
+        <div>
+          <strong>Local Water News</strong>
+          <p id="news">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buffering Spinner -->
+  <div class="buffering" id="buffering"></div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 Amrit Yatra Portal. All rights reserved.</p>
+  </div>
+
+  <script>
+    // District options based on state
+    const districts = {
+      karnataka: ['Mysuru', 'Bengaluru', 'Mangaluru'],
+      maharashtra: ['Mumbai', 'Pune', 'Nagpur'],
+      tamilnadu: ['Chennai', 'Coimbatore', 'Madurai']
+    };
+  
+    // Dummy data for each district
+    const waterData = {
+      karnataka: {
+        mysuru: {
+          wqi: '85 (Good)',
+          river: 'Kaveri River',
+          ph: '7.1 (Neutral)',
+          rain: '20 mm (Moderate Rain Today)',
+          news: 'Kaveri water levels rise after recent rainfall.'
+        },
+        bengaluru: {
+          wqi: '78 (Moderate)',
+          river: 'Arkavathi River',
+          ph: '6.8 (Slightly Acidic)',
+          rain: '5 mm (Drizzle Today)',
+          news: 'City plans water conservation drive.'
+        },
+        mangaluru: {
+          wqi: '90 (Excellent)',
+          river: 'Netravati River',
+          ph: '7.3 (Neutral)',
+          rain: '35 mm (Heavy Rain Today)',
+          news: 'Coastal areas report high groundwater recharge.'
+        }
+      },
+      maharashtra: {
+        mumbai: {
+          wqi: '75 (Moderate)',
+          river: 'Mithi River',
+          ph: '6.9 (Slightly Acidic)',
+          rain: '10 mm (Light Rain Today)',
+          news: 'BMC increases water supply from Upper Vaitarna.'
+        },
+        pune: {
+          wqi: '82 (Good)',
+          river: 'Mula-Mutha River',
+          ph: '7.0 (Neutral)',
+          rain: '15 mm (Moderate Rain Today)',
+          news: 'Dam levels stable after recent showers.'
+        },
+        nagpur: {
+          wqi: '80 (Good)',
+          river: 'Nag River',
+          ph: '7.2 (Neutral)',
+          rain: '8 mm (Light Rain Today)',
+          news: 'Local wells show improved water levels.'
+        }
+      },
+      tamilnadu: {
+        chennai: {
+          wqi: '70 (Moderate)',
+          river: 'Adyar River',
+          ph: '6.7 (Slightly Acidic)',
+          rain: '25 mm (Moderate Rain Today)',
+          news: 'Reservoirs near Chennai at 60% capacity.'
+        },
+        coimbatore: {
+          wqi: '88 (Good)',
+          river: 'Noyyal River',
+          ph: '7.4 (Slightly Alkaline)',
+          rain: '12 mm (Light Rain Today)',
+          news: 'Textile industry benefits from stable water supply.'
+        },
+        madurai: {
+          wqi: '83 (Good)',
+          river: 'Vaigai River',
+          ph: '7.1 (Neutral)',
+          rain: '18 mm (Moderate Rain Today)',
+          news: 'Vaigai dam releases water for irrigation.'
+        }
+      }
+    };
+  
+    function updateDistricts() {
+      const state = document.getElementById('state').value;
+      const districtSelect = document.getElementById('district');
+      districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+      districtSelect.disabled = false;
+  
+      if (state && districts[state]) {
+        districts[state].forEach(district => {
+          const option = document.createElement('option');
+          option.value = district.toLowerCase();
+          option.textContent = district;
+          districtSelect.appendChild(option);
+        });
+      }
+    }
+  
+    function fetchStatus() {
+      const state = document.getElementById('state').value;
+      const district = document.getElementById('district').value;
+      if (!state || !district) {
+        alert('Please select both state and district.');
+        return;
+      }
+  
+      // Show buffering
+      const buffering = document.getElementById('buffering');
+      buffering.style.display = 'block';
+  
+      // Hide status initially
+      const status = document.getElementById('status');
+      status.style.display = 'none';
+  
+      // Simulate data fetch with delay
+      setTimeout(() => {
+        buffering.style.display = 'none';
+        status.style.display = 'block';
+  
+        // Fetch and display district-specific data
+        const data = waterData[state][district];
+        document.getElementById('wqi').textContent = data.wqi;
+        document.getElementById('river').textContent = data.river;
+        document.getElementById('ph').textContent = data.ph;
+        document.getElementById('rain').textContent = data.rain;
+        document.getElementById('news').textContent = data.news;
+  
+      }, 2000); // 2-second buffer for realism
+    }
+  </script>
+</body>
+</html>

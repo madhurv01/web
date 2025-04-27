@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Amrit Yatra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #e6f3ff, #b3d9ff);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('water-bg.jpg') no-repeat center/cover; /* Add your image here */
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            transition: background 1s ease;
+        }
+
+        .hero h1 {
+            background-color: #004d99;
+            font-size: 3.5rem;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        /* Content Sections */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #0066cc;
+            color: white;
+            padding: 20px;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.5s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #004d99;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 1s ease;
+        }
+
+        .footer.slide-up {
+            transform: translateY(0);
+        }
+
+        .footer-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .support-btn {
+            background: #00cc66;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .support-btn:hover {
+            background: #00994d;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .stats { flex-direction: column; align-items: center; }
+            .stat-item { margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Amrit Yatra</h1>
+            <p style="color: blue;">Flowing Toward Pure Water for All</p>
+        </div>
+    </header>
+
+    <section class="content">
+        <div class="section fade-in">
+            <h2>Our Purpose</h2>
+            <p>Inspired by the <strong>Jal Jeevan Mission</strong>, Amrit Yatra is a movement to ensure every Indian has access to safe, clean drinking water. We are on a quest to turn the vision of <em>Har Ghar Jal</em> into reality, delivering the nectar of life to every home.</p>
+        </div>
+
+        <div class="section fade-in">
+            <h2>The Challenge</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">70%</span>
+                    <p>of India's surface water is polluted</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">37.7M</span>
+                    <p>people affected by waterborne diseases yearly</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">60%</span>
+                    <p>of rural households lack piped water</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section fade-in">
+            <h2>Our Work</h2>
+            <p>We install sustainable water systems, combat pollution with innovative tech, and empower communities to preserve their water resources—building a healthier, stronger India, one drop at a time.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Join the Journey</h3>
+            <p>Be part of Amrit Yatra. Together, we can make clean water a right, not a privilege.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation trigger
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                const position = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (position < windowHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+
+            const footer = document.querySelector('.footer');
+            const footerPosition = footer.getBoundingClientRect().top;
+            if (footerPosition < windowHeight) {
+                footer.classList.add('slide-up');
+            }
+        });
+    </script>
+</body>
+</html>

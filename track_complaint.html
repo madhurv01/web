@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint - Amrit Yatra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e6f0fa 0%, #fff 100%);
+            color: #1a3c34;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #1a3c34;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #f4a261;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            background: #f4a261;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #1a3c34;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid #1a3c34;
+        }
+
+        h2 {
+            color: #1a3c34;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 250px;
+            border: 2px solid #1a3c34;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #1a3c34;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #f4a261;
+        }
+
+        .complaint-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        th {
+            background: #1a3c34;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        tr:nth-child(even) td {
+            background: #f1f5f5;
+        }
+
+        tr:hover td {
+            background: #e6f0fa;
+            transition: background 0.2s ease;
+        }
+
+        footer {
+            background: #1a3c34;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            .search-bar input {
+                width: 200px;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Amrit Yatra</h1>
+        <p>Track Your Water Sanitation Complaint</p>
+    </header>
+    <nav>
+        <a href="/complaint">File Complaint</a>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+    </nav>
+    <div class="container">
+        <h2>Complaint Tracking</h2>
+        <div class="search-bar">
+            <input type="text" id="complaintId" placeholder="Enter Complaint Code (e.g., X7Y8Z9)">
+            <button onclick="trackComplaint()">Track</button>
+        </div>
+        <div class="complaint-table">
+            <table id="complaintTable">
+                <thead>
+                    <tr>
+                        <th>Complaint Code</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Issue</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="complaintBody">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 Amrit Yatra, Government of India</p>
+    </footer>
+    <script>
+        function trackComplaint() {
+            const complaintId = document.getElementById('complaintId').value.trim();
+            const tbody = document.getElementById('complaintBody');
+            tbody.innerHTML = ''; // Clear existing rows
+
+            if (!complaintId) {
+                tbody.innerHTML = '<tr><td colspan="7">Please enter a complaint code.</td></tr>';
+                return;
+            }
+
+            fetch(`/track_complaint/${complaintId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        tbody.innerHTML = '<tr><td colspan="7">No complaint found with this code.</td></tr>';
+                        return;
+                    }
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.code}</td>
+                        <td>${data.name}</td>
+                        <td>${data.address}</td>
+                        <td>${data.phone}</td>
+                        <td>${data.issue}</td>
+                        <td>${data.details}</td>
+                        <td>${data.status}</td>
+                    `;
+                    tbody.appendChild(row);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tbody.innerHTML = '<tr><td colspan="7">Error fetching complaint data.</td></tr>';
+                });
+        }
+    </script>
+</body>
+</html>

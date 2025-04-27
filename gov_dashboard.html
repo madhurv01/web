@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP Portal - Panchayat Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #e6ffe6, #b3ffb3);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* News Ticker */
+    .news-ticker {
+      background: #006600;
+      color: white;
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 20;
+      overflow: hidden;
+      font-size: 1rem;
+    }
+    .news-ticker marquee {
+      width: 100%;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #006600, #009933);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 60px; /* Adjusted for news ticker height */
+      z-index: 10;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+    .header p {
+      margin: 5px 0 0;
+      font-size: 1.1rem;
+    }
+
+    /* Dashboard Container */
+    .dashboard {
+      max-width: 1200px;
+      margin: 100px auto 40px; /* Adjusted margin-top for news ticker and header */
+      padding: 0 20px;
+      flex-grow: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    /* Card Styles */
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+      transition: left 0.5s ease;
+    }
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card i {
+      font-size: 3rem;
+      color: #006600;
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      font-size: 1.8rem;
+      color: #006600;
+      margin-bottom: 15px;
+    }
+    .card p {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .card a {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #006600;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .card a:hover {
+      background: #004d00;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    .footer {
+      background: #006600;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      transition: transform 0.5s ease;
+    }
+    .footer.slide-up {
+      transform: translateY(0);
+    }
+    .footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
+      .news-ticker {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Scroll Animation */
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- News Ticker -->
+  <div class="news-ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      Latest Indian Sanitation News: 
+      Government launches Swachh Bharat Mission 2.0 to improve rural sanitation | 
+      Tamil Nadu achieves 100% ODF status in rural areas | 
+      New water purification plants installed in 50 Gujarat villages | 
+      Maharashtra allocates ₹500 crore for sanitation infrastructure
+    </marquee>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>GP Portal</h1>
+    <p>Panchayat Dashboard</p>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <!-- View Complaints Card -->
+    <div class="card">
+      <i class="fas fa-file-alt"></i>
+      <h2>View Complaints</h2>
+      <p>Review and manage water and sanitation complaints submitted by residents.</p>
+      <a href="/view_complaints">View Now</a>
+    </div>
+    
+
+    <!-- Report Emergency Card -->
+    <div class="card">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Report Emergency</h2>
+      <p>Report urgent water or sanitation issues directly to authorities.</p>
+      <a href="/report_emergency">Report Now</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 GP Portal. All rights reserved.</p>
+  </div>
+
+  <script>
+    // Footer slide-up animation on scroll
+    window.addEventListener('scroll', () => {
+      const footer = document.querySelector('.footer');
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      if (scrollPosition > documentHeight - 50) {
+        footer.classList.add('slide-up');
+        footer.style.animation = 'slideUp 0.5s ease forwards';
+      }
+    });
+  </script>
+</body>
+</html>
