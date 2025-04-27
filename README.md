@@ -7,9 +7,8 @@ Amrit Yatra is a web application that combines frontend, backend, and database t
 
 ## Take a look at the background of this project:
 
-<video src="video.mp4" autoplay controls width="100%">
-  Your browser does not support the video tag.
-</video>
+
+[![Amrit Yatra Video](AMRIT YATRA.png)](https://raw.githubusercontent.com/madhurv01/web/master/video.mp4)
 
 
 
