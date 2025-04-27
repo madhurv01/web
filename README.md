@@ -1,9 +1,20 @@
 <img src="AMRIT YATRA.png" alt="Project Image" width="100%">
 
 # Amrit Yatra:
-Amrit Yatra is a web application that combines frontend, backend, and database technologies to create a smooth user experience. The frontend offers a simple, user-friendly interface. The backend manages data and logic efficiently. The database securely stores and organizes information. Amrit Yatra connects users to meaningful experiences, focusing on reliability, ease of use, and performance.
 
-# Files structure:
+Amrit Yatra is a web application that combines frontend, backend, and database technologies to create a smooth user experience. The frontend offers a simple, user-friendly interface. The backend manages data and logic efficiently. The database securely stores and organizes information. Amrit Yatra connects users to meaningful experiences, focusing on reliability, ease of use, and performance.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Take a look at the background of this project:
+
+<video src="video.mp4" autoplay controls width="100%">
+  Your browser does not support the video tag.
+</video>
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Files structure:
 
 ->FRONTEND
 
@@ -21,7 +32,7 @@ gp.db, usercredentials.db
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#TO RUN THE FILE :
+## TO RUN THE FILE :
 
 Step-1: Clone this repository as it is to your local system .
 
