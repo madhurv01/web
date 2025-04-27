@@ -1,4 +1,4 @@
-<img src="logo.jpeg" alt="Project Image" width="300">
+<img src="AMRIT YATRA.png" alt="Project Image" width="300">
 
 # Amrit Yatra:
 Amrit Yatra is a web application that combines frontend, backend, and database technologies to create a smooth user experience. The frontend offers a simple, user-friendly interface. The backend manages data and logic efficiently. The database securely stores and organizes information. Amrit Yatra connects users to meaningful experiences, focusing on reliability, ease of use, and performance.
