@@ -3,6 +3,7 @@
 ## Amrit Yatra:
 
 Amrit Yatra is a web application that combines frontend, backend, and database technologies to create a smooth user experience. The frontend offers a simple, user-friendly interface. The backend manages data and logic efficiently. The database securely stores and organizes information. Amrit Yatra connects users to meaningful experiences, focusing on reliability, ease of use, and performance.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Take a look at the background of this project (Video explanation):
@@ -66,11 +67,12 @@ python app.py
 ```
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Images:
-```
-<img src=".png" alt="Project Image" width="100%">
-<img src=".png" alt="Project Image" width="100%">
-<img src=".png" alt="Project Image" width="100%">
-```
+
+<img src="image1.png" alt="Project Image" width="100%">
+
+<img src="image2.png" alt="Project Image" width="100%">
+
+<img src="image3.png" alt="Project Image" width="100%">
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🌐 Socials to connect:
