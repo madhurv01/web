@@ -13,40 +13,64 @@ Amrit Yatra is a web application that combines frontend, backend, and database t
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Files structure:
-
-->FRONTEND
-
-about.html, complaint.html, gov_dashboard.html, gov_login.html, index.html, report_emergency.html, reset.js, style2.css, track_complaint.html, user_dashboard.html, user_login.html, view_complaint.html, view_complaints.html, water_status.html
-
-
-->BACKEND
-
-app.py
-
-
-->DATABASE
-
-gp.db, usercredentials.db
+```
+Amrit Yatra
+├── Frontend
+│   ├── about.html
+│   ├── complaint.html
+│   ├── gov_dashboard.html
+│   ├── gov_login.html
+│   ├── index.html
+│   ├── report_emergency.html
+│   ├── reset.js
+│   ├── style2.css
+│   ├── track_complaint.html
+│   ├── user_dashboard.html
+│   ├── user_login.html
+│   ├── view_complaint.html
+│   ├── view_complaints.html
+│   ├── water_status.html
+├── Backend
+│   ├── app.py
+├── Database
+│   ├── gp.db
+│   ├── usercredentials.db
+```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## TO RUN THE FILE :
+```
+# Step 1: Clone this repository to your local system
+git clone <repository-url>
 
-Step-1: Clone this repository as it is to your local system .
+# Step 2: Keep all files in the root directory, do not move them to subfolders
 
-Step-2: Do not put any of the above files under sub folders , let it be as it is.
+# Step 3: Use VS Code editor (recommended)
 
-Step-3: Use VS code editor(recommended)
+# Step 4: Open the cloned repository in VS Code
 
-Step-4: Open the cloned repository in VS code 
+# Step 5: Open a terminal in VS Code and switch to Command Prompt
 
-Step-5: Now open terminal inside this , switch to command prompt in that terminal 
+# Step 6: Ensure Flask and Python are installed on your system
+# If not, download and install them from their official websites
 
-Step-6: Make sure flask and python are available on your system or else download them from brower 
+# Step 7: Run the application
+python app.py
+# The website will be hosted on your local server
 
-Step-7: Run the command "python app.py" and the website is hosted in your local server
+# Step 8: To access the database
+# Download SQLite from the official website
+# Open the .db files (gp.db, usercredentials.db) in SQLite
 
-Step-8: To access the DB download sqlite from the brower and open the .db file which is prsent in this folder inside sqlite
+```
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Images:
+```
+<img src=".png" alt="Project Image" width="100%">
+<img src=".png" alt="Project Image" width="100%">
+<img src=".png" alt="Project Image" width="100%">
+```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🌐 Socials to connect:
