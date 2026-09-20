@@ -1,3 +1,11 @@
+
+<img
+    src="AmritYaatraa.png"
+    alt="Build Your Own Agent Now - n8n AI Agents"
+    width="100%"
+  />
+
+
 # Amrit Yatra
 
 Amrit Yatra is a water-supply grievance and tracking portal. Citizens can report water-related
