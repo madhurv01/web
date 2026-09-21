@@ -169,6 +169,16 @@ than one feature into `shared/components/`, give any new table or RPC matching R
 the same migration, and prefer extending `SupabaseService` over calling `createClient` again
 elsewhere.
 
+## Deployment
+
+The app builds to static assets (`npm run build` → `dist/amrit-yatra`), so it can be hosted on
+any static host — Netlify, Vercel, GitHub Pages, or Supabase's own storage/CDN all work with no
+server process required. Point the host at `dist/amrit-yatra/browser` as the publish directory.
+Configure the host to redirect all unmatched paths to `index.html` so Angular's client-side
+router can handle deep links like `/track-complaint` or `/view-complaint/:code` directly. No
+environment variables need to be injected at build time, since the Supabase URL and publishable
+key are already baked into `src/environments/*.ts` and are safe to ship publicly.
+
 ## License
 
 Internal project — no license specified.
