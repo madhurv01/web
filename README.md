@@ -179,6 +179,20 @@ router can handle deep links like `/track-complaint` or `/view-complaint/:code` 
 environment variables need to be injected at build time, since the Supabase URL and publishable
 key are already baked into `src/environments/*.ts` and are safe to ship publicly.
 
+## Tech decisions & tradeoffs
+
+A few choices worth explaining for anyone extending this app:
+
+- **Tailwind + SCSS instead of Angular Material.** Material would have given faster access to
+  pre-built table/form components, but at the cost of restyling every component to match the
+  gradient/glassmorphism look. Hand-rolled components stay smaller and match the design exactly.
+- **RPC functions instead of a public API layer.** Rather than building a thin backend to expose
+  "safe" complaint data to anonymous visitors, the two public RPCs (`amrit_track_complaint`,
+  `amrit_public_stats`) do that narrowing inside Postgres, where it can't be bypassed by calling
+  the table endpoints directly.
+- **Role stored on a profile row, not a Postgres role or JWT claim.** Keeps role changes a plain
+  `UPDATE` statement instead of requiring custom auth hooks or re-issuing tokens.
+
 ## License
 
 Internal project — no license specified.
