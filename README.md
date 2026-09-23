@@ -193,6 +193,20 @@ A few choices worth explaining for anyone extending this app:
 - **Role stored on a profile row, not a Postgres role or JWT claim.** Keeps role changes a plain
   `UPDATE` statement instead of requiring custom auth hooks or re-issuing tokens.
 
+## Troubleshooting
+
+- **"Row not found" or empty dashboards after login.** The `amrit_profiles` row is created at
+  registration time, not by a database trigger — if sign-up was interrupted, that row may be
+  missing. Check `select * from amrit_profiles where id = '<user-id>'` in Supabase and insert it
+  manually if needed.
+- **Gov login redirects back to citizen dashboard.** This means the account authenticated fine
+  but `amrit_profiles.role` is still `citizen`; re-run the promotion SQL in "Creating a government
+  account" above.
+- **Tracking a complaint returns nothing.** Codes are stored uppercase; the RPC uppercases the
+  input, but double-check for typos or extra whitespace pasted into the field.
+- **Build fails after pulling changes.** Delete `node_modules` and `.angular/cache`, then
+  `npm install` again — a stale Angular build cache is the most common cause of odd type errors.
+
 ## License
 
 Internal project — no license specified.
