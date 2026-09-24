@@ -207,6 +207,3 @@ A few choices worth explaining for anyone extending this app:
 - **Build fails after pulling changes.** Delete `node_modules` and `.angular/cache`, then
   `npm install` again — a stale Angular build cache is the most common cause of odd type errors.
 
-## License
-
-Internal project — no license specified.
