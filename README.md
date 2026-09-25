@@ -207,3 +207,16 @@ A few choices worth explaining for anyone extending this app:
 - **Build fails after pulling changes.** Delete `node_modules` and `.angular/cache`, then
   `npm install` again — a stale Angular build cache is the most common cause of odd type errors.
 
+## Roadmap: AI-assisted triage
+
+The most impactful AI addition under consideration is automatic complaint triage: on submission,
+a Supabase Edge Function would send the `details` text to an LLM to classify urgency and confirm
+the `issue` category, so genuinely urgent reports (e.g. multi-day outages affecting many
+households) surface at the top of the government dashboard instead of sitting in date order.
+This would need one new column (`priority` or `ai_urgency_score` on `amrit_complaints`), an Edge
+Function invoked from `SupabaseService.submitComplaint`, and a default sort-by-urgency on the gov
+dashboard table. Complementary ideas noted for later: duplicate-complaint detection via text
+embeddings (avoid dispatching two crews for one leak), and a plain-language status assistant on
+the tracking page that answers questions like "why is this delayed" from the complaint's own
+status history rather than a static badge.
+
