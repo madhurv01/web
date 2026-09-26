@@ -1,11 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { WaterOrbComponent } from '../../shared/components/water-orb/water-orb.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [RouterLink, WaterOrbComponent],
   template: `
     <section class="auth-bg relative overflow-hidden">
       <div class="auth-bg-overlay"></div>
@@ -32,19 +32,7 @@ import { RouterLink } from '@angular/router';
           </div>
         </div>
         <div class="hidden md:flex justify-center animate-fade-in-up" style="animation-delay: 120ms">
-          <model-viewer
-            src="https://modelviewer.dev/shared-assets/models/sphere.glb"
-            environment-image="neutral"
-            exposure="1.1"
-            shadow-intensity="1"
-            class="water-droplet-model"
-            alt="Rotating 3D model representing a drop of water"
-            auto-rotate
-            camera-controls
-            disable-zoom
-            rotation-per-second="14deg"
-            style="width: 380px; height: 380px;"
-          ></model-viewer>
+          <app-water-orb [size]="360" />
         </div>
       </div>
     </section>

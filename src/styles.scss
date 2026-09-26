@@ -35,10 +35,6 @@ html, body {
   background-attachment: fixed;
 }
 
-.water-droplet-model {
-  filter: hue-rotate(150deg) saturate(1.4) drop-shadow(0 20px 40px rgba(45, 212, 191, 0.35));
-}
-
 .auth-bg-overlay {
   position: absolute;
   inset: 0;

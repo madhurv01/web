@@ -1,15 +1,15 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../../core/supabase.service';
 import { friendlyAuthError } from '../../../shared/utils/auth-error';
+import { WaterOrbComponent } from '../../../shared/components/water-orb/water-orb.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, WaterOrbComponent],
   template: `
     <section class="auth-bg min-h-[calc(100vh-4rem)] grid md:grid-cols-2">
       <!-- Decorative / 3D side -->
@@ -18,19 +18,7 @@ import { friendlyAuthError } from '../../../shared/utils/auth-error';
         <div class="auth-blob auth-blob-1"></div>
         <div class="auth-blob auth-blob-2"></div>
         <div class="relative z-10 text-center px-10">
-          <model-viewer
-            src="https://modelviewer.dev/shared-assets/models/sphere.glb"
-            environment-image="neutral"
-            exposure="1.1"
-            shadow-intensity="1"
-            class="water-droplet-model"
-            alt="Rotating water droplet"
-            auto-rotate
-            camera-controls
-            disable-zoom
-            rotation-per-second="18deg"
-            style="width: 280px; height: 280px; margin: 0 auto;"
-          ></model-viewer>
+          <app-water-orb [size]="240" />
           <h2 class="text-2xl font-bold text-white mt-4">Welcome back to Amrit Yatra</h2>
           <p class="text-white/70 mt-2 max-w-xs mx-auto">
             Track water complaints, report emergencies and stay informed — all in one place.

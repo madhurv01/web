@@ -1,9 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../../core/supabase.service';
 import { friendlyAuthError } from '../../../shared/utils/auth-error';
+import { WaterOrbComponent } from '../../../shared/components/water-orb/water-orb.component';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
   const pw = control.get('password')?.value;
@@ -14,8 +15,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, WaterOrbComponent],
   template: `
     <section class="auth-bg min-h-[calc(100vh-4rem)] grid md:grid-cols-2">
       <div class="relative hidden md:flex items-center justify-center overflow-hidden">
@@ -23,19 +23,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
         <div class="auth-blob auth-blob-1"></div>
         <div class="auth-blob auth-blob-2"></div>
         <div class="relative z-10 text-center px-10">
-          <model-viewer
-            src="https://modelviewer.dev/shared-assets/models/sphere.glb"
-            environment-image="neutral"
-            exposure="1.1"
-            shadow-intensity="1"
-            class="water-droplet-model"
-            alt="Rotating water droplet"
-            auto-rotate
-            camera-controls
-            disable-zoom
-            rotation-per-second="18deg"
-            style="width: 280px; height: 280px; margin: 0 auto;"
-          ></model-viewer>
+          <app-water-orb [size]="240" />
           <h2 class="text-2xl font-bold text-white mt-4">Join Amrit Yatra</h2>
           <p class="text-white/70 mt-2 max-w-xs mx-auto">
             Create an account to file complaints, track resolutions and get emergency alerts.
