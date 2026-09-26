@@ -14,10 +14,10 @@ import { Router } from '@angular/router';
     <button
       type="button"
       (click)="goBack()"
-      class="group inline-flex items-center gap-2 text-white/60 hover:text-white text-sm font-medium mb-4 transition-all duration-200 hover:-translate-x-0.5"
+      class="dash-back-btn group inline-flex items-center gap-2 text-sm font-medium mb-4 transition-all duration-200 hover:-translate-x-0.5"
     >
       <span
-        class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-200 group-hover:bg-white/15 group-hover:border-white/25"
+        class="dash-back-btn-icon w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
         >←</span
       >
       @if (label) {

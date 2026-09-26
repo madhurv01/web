@@ -16,8 +16,8 @@ import { SupabaseService } from '../../core/supabase.service';
         <span class="inline-block px-4 py-1.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-sm font-semibold mb-4">
           🚨 Emergency Reporting
         </span>
-        <h1 class="text-3xl font-bold text-white mb-2">Report a No-Water-Supply Emergency</h1>
-        <p class="text-white/60">This is escalated for priority attention by local authorities.</p>
+        <h1 class="text-3xl font-bold dash-text mb-2">Report a No-Water-Supply Emergency</h1>
+        <p class="dash-text-muted">This is escalated for priority attention by local authorities.</p>
       </div>
       <app-card>
         <app-complaint-form

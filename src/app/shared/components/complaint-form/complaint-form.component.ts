@@ -10,19 +10,19 @@ import { ISSUE_OPTIONS } from '../../../core/models';
   template: `
     <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Full Name</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Full Name</label>
         <input class="input-field" formControlName="name" placeholder="Your full name" />
         <p class="field-error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Name is required.</p>
       </div>
 
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Address</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Address</label>
         <input class="input-field" formControlName="address" placeholder="Village / Ward / District" />
         <p class="field-error" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">Address is required.</p>
       </div>
 
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Phone Number</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Phone Number</label>
         <input class="input-field" formControlName="phone" placeholder="10-digit mobile number" />
         <p class="field-error" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
           Enter a valid 10-digit phone number.
@@ -30,7 +30,7 @@ import { ISSUE_OPTIONS } from '../../../core/models';
       </div>
 
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Nature of Issue</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Nature of Issue</label>
         <select class="input-field" formControlName="issue" [class.opacity-60]="lockIssue">
           <option value="" disabled>Select Issue</option>
           @for (opt of issueOptions; track opt) {
@@ -41,7 +41,7 @@ import { ISSUE_OPTIONS } from '../../../core/models';
       </div>
 
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Complaint Details</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Complaint Details</label>
         <textarea class="input-field" rows="4" formControlName="details" placeholder="Describe the issue in detail (min. 10 characters)"></textarea>
         <p class="field-error" *ngIf="form.get('details')?.touched && form.get('details')?.invalid">
           Please provide at least 10 characters of detail.
@@ -49,7 +49,7 @@ import { ISSUE_OPTIONS } from '../../../core/models';
       </div>
 
       <div>
-        <label class="block text-white/80 text-sm font-medium mb-1.5">Date of Issue</label>
+        <label class="block dash-text text-sm font-medium mb-1.5">Date of Issue</label>
         <input class="input-field" type="date" formControlName="complaint_date" />
         <p class="field-error" *ngIf="form.get('complaint_date')?.touched && form.get('complaint_date')?.invalid">
           Date is required.

@@ -58,6 +58,10 @@ export const routes: Routes = [
         canActivate: [roleGuard('government')],
         loadComponent: () => import('./features/gov-dashboard/gov-dashboard.component').then((m) => m.GovDashboardComponent),
       },
+      {
+        path: 'news',
+        loadComponent: () => import('./features/news/news.component').then((m) => m.NewsComponent),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

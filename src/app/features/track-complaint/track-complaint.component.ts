@@ -15,8 +15,8 @@ import { Complaint } from '../../core/models';
     <section class="max-w-2xl mx-auto px-4 py-16">
       <app-back-button></app-back-button>
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">Track Your Complaint</h1>
-        <p class="text-white/60">Enter your 6-character complaint code to check its status.</p>
+        <h1 class="text-3xl font-bold dash-text mb-2">Track Your Complaint</h1>
+        <p class="dash-text-muted">Enter your 6-character complaint code to check its status.</p>
       </div>
 
       <app-card>
@@ -43,17 +43,17 @@ import { Complaint } from '../../core/models';
           </div>
 
           <div *ngIf="result" class="space-y-3 text-sm animate-fade-in-up">
-            <div class="flex justify-between border-b border-white/10 pb-2">
-              <span class="text-white/50">Code</span><span class="text-white font-mono">{{ result.code }}</span>
+            <div class="flex justify-between border-b dash-border pb-2">
+              <span class="dash-text-muted">Code</span><span class="dash-text font-mono">{{ result.code }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2">
-              <span class="text-white/50">Issue</span><span class="text-white">{{ result.issue }}</span>
+            <div class="flex justify-between border-b dash-border pb-2">
+              <span class="dash-text-muted">Issue</span><span class="dash-text">{{ result.issue }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2">
-              <span class="text-white/50">Date</span><span class="text-white">{{ result.complaint_date }}</span>
+            <div class="flex justify-between border-b dash-border pb-2">
+              <span class="dash-text-muted">Date</span><span class="dash-text">{{ result.complaint_date }}</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-white/50">Status</span>
+              <span class="dash-text-muted">Status</span>
               <app-status-badge [status]="result.status || 'Active'"></app-status-badge>
             </div>
           </div>

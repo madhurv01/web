@@ -13,8 +13,8 @@ import { SupabaseService } from '../../core/supabase.service';
     <section class="max-w-2xl mx-auto px-4 py-12">
       <app-back-button></app-back-button>
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">File a Water Sanitation Complaint</h1>
-        <p class="text-white/60">Tell us what's wrong — we'll route it to your local authority.</p>
+        <h1 class="text-3xl font-bold dash-text mb-2">File a Water Sanitation Complaint</h1>
+        <p class="dash-text-muted">Tell us what's wrong — we'll route it to your local authority.</p>
       </div>
       <app-card>
         <app-complaint-form

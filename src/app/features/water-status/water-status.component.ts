@@ -13,8 +13,8 @@ import { PublicStats } from '../../core/models';
     <section class="max-w-5xl mx-auto px-4 py-16">
       <app-back-button></app-back-button>
       <div class="text-center mb-10">
-        <h1 class="text-3xl font-bold text-white mb-2">Water Status Overview</h1>
-        <p class="text-white/60">Aggregate complaint statistics across the portal.</p>
+        <h1 class="text-3xl font-bold dash-text mb-2">Water Status Overview</h1>
+        <p class="dash-text-muted">Aggregate complaint statistics across the portal.</p>
       </div>
 
       <div *ngIf="loading" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

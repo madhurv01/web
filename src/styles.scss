@@ -2,6 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Dark theme defaults — used by public/auth pages and any component (e.g.
+     the back button) shared with them. Components rendered inside the
+     authenticated dashboard layout automatically pick up the light theme
+     overrides below because [data-dash-theme] sets these same variables on
+     an ancestor element and CSS custom properties inherit down the tree. */
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --divider: rgba(255, 255, 255, 0.1);
+  --soft-bg: rgba(255, 255, 255, 0.05);
+  --soft-bg-strong: rgba(255, 255, 255, 0.12);
+  --surface-bg: rgba(255, 255, 255, 0.06);
+  --surface-border: rgba(255, 255, 255, 0.12);
+  --surface-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.4);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.15);
+  --input-placeholder: rgba(255, 255, 255, 0.4);
+  --accent: #2dd4bf;
+  --accent-strong: #14b8a6;
+  --code-color: #5eead4;
+  --danger: #f87171;
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Dashboard light/bright gradient themes ---------- */
+/* Applied via [data-dash-theme="ocean|sunrise|emerald"] on the dashboard
+   layout's root element. Everything rendered inside (sidebar, topbar,
+   stat cards, tables, feature pages) inherits these variables. */
+
+[data-dash-theme] {
+  min-height: 100vh;
+  background-image: var(--dash-page-bg);
+  transition: background-image 0.3s ease;
+}
+
+[data-dash-theme='ocean'] {
+  --dash-page-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 45%, #ccfbf1 100%);
+  --text-primary: #0f172a;
+  --text-muted: #475569;
+  --divider: rgba(15, 23, 42, 0.08);
+  --soft-bg: rgba(14, 165, 233, 0.06);
+  --soft-bg-strong: rgba(14, 165, 233, 0.14);
+  --surface-bg: rgba(255, 255, 255, 0.86);
+  --surface-border: rgba(14, 165, 233, 0.16);
+  --surface-shadow: 0 20px 45px -20px rgba(14, 116, 144, 0.28);
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-placeholder: #94a3b8;
+  --accent: #0ea5e9;
+  --accent-strong: #0284c7;
+  --code-color: #0d9488;
+  --danger: #dc2626;
+  --btn-secondary-bg: #f0f9ff;
+  --btn-secondary-border: #bae6fd;
+  --sidebar-bg: linear-gradient(180deg, #0c4a6e 0%, #075985 100%);
+  --sidebar-text: #e0f2fe;
+  --sidebar-text-muted: rgba(224, 242, 254, 0.68);
+  --sidebar-active-bg: rgba(255, 255, 255, 0.16);
+  --topbar-bg: rgba(255, 255, 255, 0.82);
+  --topbar-border: rgba(14, 165, 233, 0.16);
+}
+
+[data-dash-theme='sunrise'] {
+  --dash-page-bg: linear-gradient(135deg, #fffbeb 0%, #ffedd5 45%, #fee2e2 100%);
+  --text-primary: #292524;
+  --text-muted: #78716c;
+  --divider: rgba(41, 37, 36, 0.09);
+  --soft-bg: rgba(217, 119, 6, 0.06);
+  --soft-bg-strong: rgba(217, 119, 6, 0.14);
+  --surface-bg: rgba(255, 255, 255, 0.88);
+  --surface-border: rgba(217, 119, 6, 0.18);
+  --surface-shadow: 0 20px 45px -20px rgba(194, 65, 12, 0.28);
+  --input-bg: #ffffff;
+  --input-border: #e7e5e4;
+  --input-placeholder: #a8a29e;
+  --accent: #f59e0b;
+  --accent-strong: #d97706;
+  --code-color: #c2410c;
+  --danger: #dc2626;
+  --btn-secondary-bg: #fef3c7;
+  --btn-secondary-border: #fde68a;
+  --sidebar-bg: linear-gradient(180deg, #7c2d12 0%, #c2410c 100%);
+  --sidebar-text: #fff7ed;
+  --sidebar-text-muted: rgba(255, 247, 237, 0.68);
+  --sidebar-active-bg: rgba(255, 255, 255, 0.18);
+  --topbar-bg: rgba(255, 255, 255, 0.85);
+  --topbar-border: rgba(217, 119, 6, 0.18);
+}
+
+[data-dash-theme='emerald'] {
+  --dash-page-bg: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 45%, #ecfeff 100%);
+  --text-primary: #0f172a;
+  --text-muted: #4b5563;
+  --divider: rgba(15, 23, 42, 0.08);
+  --soft-bg: rgba(16, 185, 129, 0.06);
+  --soft-bg-strong: rgba(16, 185, 129, 0.14);
+  --surface-bg: rgba(255, 255, 255, 0.85);
+  --surface-border: rgba(16, 185, 129, 0.18);
+  --surface-shadow: 0 20px 45px -20px rgba(5, 150, 105, 0.28);
+  --input-bg: #ffffff;
+  --input-border: #d1fae5;
+  --input-placeholder: #9ca3af;
+  --accent: #10b981;
+  --accent-strong: #059669;
+  --code-color: #0891b2;
+  --danger: #dc2626;
+  --btn-secondary-bg: #ecfdf5;
+  --btn-secondary-border: #a7f3d0;
+  --sidebar-bg: linear-gradient(180deg, #064e3b 0%, #0f766e 100%);
+  --sidebar-text: #ecfdf5;
+  --sidebar-text-muted: rgba(236, 253, 245, 0.68);
+  --sidebar-active-bg: rgba(255, 255, 255, 0.16);
+  --topbar-bg: rgba(255, 255, 255, 0.82);
+  --topbar-border: rgba(16, 185, 129, 0.18);
+}
+
+.dash-text { color: var(--text-primary); }
+.dash-text-muted { color: var(--text-muted); }
+.dash-code { color: var(--code-color); }
+.dash-border { border-color: var(--divider); }
+.dash-soft { background: var(--soft-bg); }
+.dash-soft-strong { background: var(--soft-bg-strong); }
+
+.dash-row-hover:hover { background: var(--soft-bg); }
+
+.dash-back-btn { color: var(--text-muted); }
+.dash-back-btn:hover { color: var(--text-primary); }
+.dash-back-btn-icon { background: var(--soft-bg); border: 1px solid var(--divider); }
+.dash-back-btn:hover .dash-back-btn-icon { background: var(--soft-bg-strong); }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -44,12 +175,13 @@ html, body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--surface-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--surface-border);
   border-radius: 1.25rem;
-  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--surface-shadow);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary {
@@ -57,23 +189,32 @@ html, body {
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 text-white font-medium px-6 py-3 backdrop-blur transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl font-medium px-6 py-3 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none;
+  background: var(--btn-secondary-bg);
+  border: 1px solid var(--btn-secondary-border);
+  color: var(--text-primary);
+}
+.btn-secondary:hover {
+  background: var(--soft-bg-strong);
 }
 
 .input-field {
-  @apply w-full rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/40 px-4 py-3 outline-none transition-all duration-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30;
+  @apply w-full rounded-xl px-4 py-3 outline-none transition-all duration-200;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+}
+.input-field::placeholder {
+  color: var(--input-placeholder);
+}
+.input-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .field-error {
-  @apply text-red-400 text-sm mt-1;
-}
-
-/* Hide the native cursor on fine-pointer devices; app-cursor-fx replaces it. */
-@media (hover: hover) and (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor * {
-    cursor: none !important;
-  }
+  @apply text-sm mt-1;
+  color: var(--danger);
 }
 
 /* Card hover-lift, used on stat cards / list cards across feature pages */
@@ -87,13 +228,14 @@ html, body {
 
 /* Branded skeleton loader, replaces bare "Loading..." text */
 .skeleton {
-  @apply relative overflow-hidden rounded-xl bg-white/5;
+  @apply relative overflow-hidden rounded-xl;
+  background: var(--soft-bg);
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.15), transparent);
+    background: linear-gradient(90deg, transparent, var(--soft-bg-strong), transparent);
     animation: skeleton-shimmer 1.4s infinite;
   }
 }
@@ -104,12 +246,15 @@ html, body {
 }
 
 .spinner {
-  @apply inline-block w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin;
+  @apply inline-block w-4 h-4 rounded-full animate-spin;
+  border: 2px solid var(--divider);
+  border-top-color: var(--text-primary);
 }
 
 /* Empty state block for tables/lists with no data */
 .empty-state {
-  @apply flex flex-col items-center justify-center text-center py-16 px-6 text-white/50;
+  @apply flex flex-col items-center justify-center text-center py-16 px-6;
+  color: var(--text-muted);
 }
 
 /* Fade-in-up utility for staggered list/card entrances */

@@ -21,7 +21,7 @@ import { Complaint } from '../../core/models';
 
       <div *ngIf="!loading && !complaint" class="text-center">
         <app-card [narrow]="true">
-          <p class="text-white/70">No complaint found with this code.</p>
+          <p class="dash-text">No complaint found with this code.</p>
           <a routerLink="/track-complaint" class="btn-secondary mt-4 inline-flex">Try Another Code</a>
         </app-card>
       </div>
@@ -29,37 +29,37 @@ import { Complaint } from '../../core/models';
       <div *ngIf="!loading && complaint">
         <div class="text-center mb-6">
           <span class="text-3xl">✅</span>
-          <h1 class="text-2xl font-bold text-white mt-2">Complaint Submitted</h1>
-          <p class="text-white/60 mt-1">Save this code to track your complaint anytime.</p>
+          <h1 class="text-2xl font-bold dash-text mt-2">Complaint Submitted</h1>
+          <p class="dash-text-muted mt-1">Save this code to track your complaint anytime.</p>
         </div>
 
         <app-card>
           <div class="text-center mb-6">
-            <p class="text-white/50 text-sm uppercase tracking-wide mb-1">Complaint Code</p>
-            <p class="text-4xl font-mono font-bold text-teal-300 tracking-widest">{{ complaint.code }}</p>
+            <p class="dash-text-muted text-sm uppercase tracking-wide mb-1">Complaint Code</p>
+            <p class="text-4xl font-mono font-bold dash-code tracking-widest">{{ complaint.code }}</p>
           </div>
 
           <div class="space-y-3 text-sm">
-            <div class="flex justify-between border-b border-white/10 pb-2" *ngIf="complaint.name">
-              <span class="text-white/50">Name</span><span class="text-white">{{ complaint.name }}</span>
+            <div class="flex justify-between border-b dash-border pb-2" *ngIf="complaint.name">
+              <span class="dash-text-muted">Name</span><span class="dash-text">{{ complaint.name }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2" *ngIf="complaint.address">
-              <span class="text-white/50">Address</span><span class="text-white">{{ complaint.address }}</span>
+            <div class="flex justify-between border-b dash-border pb-2" *ngIf="complaint.address">
+              <span class="dash-text-muted">Address</span><span class="dash-text">{{ complaint.address }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2" *ngIf="complaint.phone">
-              <span class="text-white/50">Phone</span><span class="text-white">{{ complaint.phone }}</span>
+            <div class="flex justify-between border-b dash-border pb-2" *ngIf="complaint.phone">
+              <span class="dash-text-muted">Phone</span><span class="dash-text">{{ complaint.phone }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2">
-              <span class="text-white/50">Issue</span><span class="text-white">{{ complaint.issue }}</span>
+            <div class="flex justify-between border-b dash-border pb-2">
+              <span class="dash-text-muted">Issue</span><span class="dash-text">{{ complaint.issue }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2" *ngIf="complaint.details">
-              <span class="text-white/50">Details</span><span class="text-white text-right max-w-xs">{{ complaint.details }}</span>
+            <div class="flex justify-between border-b dash-border pb-2" *ngIf="complaint.details">
+              <span class="dash-text-muted">Details</span><span class="dash-text text-right max-w-xs">{{ complaint.details }}</span>
             </div>
-            <div class="flex justify-between border-b border-white/10 pb-2">
-              <span class="text-white/50">Date</span><span class="text-white">{{ complaint.complaint_date }}</span>
+            <div class="flex justify-between border-b dash-border pb-2">
+              <span class="dash-text-muted">Date</span><span class="dash-text">{{ complaint.complaint_date }}</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-white/50">Status</span>
+              <span class="dash-text-muted">Status</span>
               <app-status-badge [status]="complaint.status || 'Active'"></app-status-badge>
             </div>
           </div>

@@ -15,7 +15,7 @@ interface NavItem {
   imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <aside
-      class="bg-navy-950/95 border-r border-white/10 h-full flex flex-col transition-all duration-300"
+      class="sidebar-shell h-full flex flex-col transition-all duration-300 shadow-2xl"
       [class.w-64]="!collapsed"
       [class.w-20]="collapsed"
     >
@@ -23,8 +23,8 @@ interface NavItem {
         @for (item of items; track item.link) {
           <a
             [routerLink]="item.link"
-            routerLinkActive="bg-gradient-to-r from-teal-500/25 to-cyan-500/10 text-white border-l-4 border-teal-400"
-            class="flex items-center gap-3 px-3 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-colors border-l-4 border-transparent"
+            routerLinkActive="sidebar-link-active"
+            class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl transition-colors border-l-4 border-transparent"
           >
             <span class="text-xl w-6 text-center">{{ item.icon }}</span>
             <span *ngIf="!collapsed" class="text-sm font-medium">{{ item.label }}</span>
@@ -33,12 +33,37 @@ interface NavItem {
       </nav>
       <button
         (click)="toggle()"
-        class="m-2 p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/5 text-sm hidden md:block"
+        class="sidebar-collapse-btn m-2 p-2 rounded-lg text-sm hidden md:block"
       >
         {{ collapsed ? '»' : '« Collapse' }}
       </button>
     </aside>
   `,
+  styles: [`
+    .sidebar-shell {
+      background: var(--sidebar-bg, #0a1428);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .sidebar-link {
+      color: var(--sidebar-text-muted, rgba(255, 255, 255, 0.6));
+    }
+    .sidebar-link:hover {
+      color: var(--sidebar-text, #ffffff);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .sidebar-link-active {
+      color: var(--sidebar-text, #ffffff) !important;
+      background: var(--sidebar-active-bg, rgba(255, 255, 255, 0.15)) !important;
+      border-left-color: var(--accent, #2dd4bf) !important;
+    }
+    .sidebar-collapse-btn {
+      color: var(--sidebar-text-muted, rgba(255, 255, 255, 0.5));
+    }
+    .sidebar-collapse-btn:hover {
+      color: var(--sidebar-text, #ffffff);
+      background: rgba(255, 255, 255, 0.08);
+    }
+  `],
 })
 export class SidebarComponent {
   @Input() role: UserRole = 'citizen';
@@ -57,6 +82,7 @@ export class SidebarComponent {
         { label: 'Complaints', icon: '📋', link: '/gov-dashboard/complaints' },
         { label: 'Track a Complaint', icon: '🔍', link: '/track-complaint' },
         { label: 'Water Status', icon: '📈', link: '/water-status' },
+        { label: 'Water News', icon: '📰', link: '/news' },
       ];
     }
     return [
@@ -65,6 +91,7 @@ export class SidebarComponent {
       { label: 'Track Complaint', icon: '🔍', link: '/track-complaint' },
       { label: 'Report Emergency', icon: '🚨', link: '/report-emergency' },
       { label: 'Water Status', icon: '📈', link: '/water-status' },
+      { label: 'Water News', icon: '📰', link: '/news' },
     ];
   }
 }

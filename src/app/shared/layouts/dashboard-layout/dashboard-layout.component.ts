@@ -7,6 +7,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { SupabaseService } from '../../../core/supabase.service';
 import { Profile } from '../../../core/models';
 import { routeAnimation } from '../../animations/route.animations';
+import { DashThemeService } from '../../../core/dash-theme.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -14,10 +15,11 @@ import { routeAnimation } from '../../animations/route.animations';
   imports: [RouterOutlet, NgIf, TopbarComponent, SidebarComponent],
   animations: [routeAnimation],
   template: `
-    <div class="min-h-screen flex flex-col bg-gradient-to-br from-navy-950 via-navy-900 to-[#0a1f2e]">
+    <div class="min-h-screen flex flex-col" [attr.data-dash-theme]="themeService.theme()">
       <app-topbar
         [profile]="profile"
         [showSidebarToggle]="true"
+        [showThemeSwitcher]="true"
         (toggleSidebar)="mobileOpen = !mobileOpen"
         (logout)="onLogout()"
       ></app-topbar>
@@ -47,7 +49,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   mobileOpen = false;
   private sub?: Subscription;
 
-  constructor(private supabase: SupabaseService, private router: Router) {}
+  constructor(private supabase: SupabaseService, private router: Router, protected themeService: DashThemeService) {}
 
   ngOnInit(): void {
     this.profile = this.supabase.currentProfile;

@@ -18,30 +18,30 @@ export class StatusBadgeComponent {
   get classes(): string {
     switch (this.status) {
       case 'Active':
-        return 'bg-amber-500/15 text-amber-400 border border-amber-500/30';
+        return 'bg-amber-50 text-amber-700 border border-amber-300';
       case 'In Progress':
-        return 'bg-blue-500/15 text-blue-400 border border-blue-500/30';
+        return 'bg-blue-50 text-blue-700 border border-blue-300';
       case 'Resolved':
-        return 'bg-green-500/15 text-green-400 border border-green-500/30';
+        return 'bg-emerald-50 text-emerald-700 border border-emerald-300';
       case 'Rejected':
-        return 'bg-red-500/15 text-red-400 border border-red-500/30';
+        return 'bg-red-50 text-red-700 border border-red-300';
       default:
-        return 'bg-white/10 text-white border border-white/20';
+        return 'bg-slate-100 text-slate-700 border border-slate-300';
     }
   }
 
   get dotClasses(): string {
     switch (this.status) {
       case 'Active':
-        return 'bg-amber-400';
+        return 'bg-amber-500';
       case 'In Progress':
-        return 'bg-blue-400';
+        return 'bg-blue-500';
       case 'Resolved':
-        return 'bg-green-400';
+        return 'bg-emerald-500';
       case 'Rejected':
-        return 'bg-red-400';
+        return 'bg-red-500';
       default:
-        return 'bg-white';
+        return 'bg-slate-500';
     }
   }
 }

@@ -12,8 +12,8 @@ import { Complaint, ComplaintStatus } from '../../core/models';
   imports: [CommonModule, FormsModule, StatCardComponent, StatusBadgeComponent],
   template: `
     <div class="max-w-7xl mx-auto">
-      <h1 class="text-2xl md:text-3xl font-bold text-white mb-1">Panchayat Dashboard</h1>
-      <p class="text-white/60 mb-8">Manage and resolve citizen-reported water complaints.</p>
+      <h1 class="text-2xl md:text-3xl font-bold dash-text mb-1">Panchayat Dashboard</h1>
+      <p class="dash-text-muted mb-8">Manage and resolve citizen-reported water complaints.</p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
         <div class="animate-fade-in-up hover-lift" style="animation-delay: 0ms">
@@ -32,8 +32,8 @@ import { Complaint, ComplaintStatus } from '../../core/models';
 
       <div class="glass-card p-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-white font-semibold text-lg">All Complaints</h2>
-          <button class="text-teal-300 text-sm hover:underline transition-colors" (click)="load()" [disabled]="loading">
+          <h2 class="dash-text font-semibold text-lg">All Complaints</h2>
+          <button class="dash-code text-sm hover:underline transition-colors" (click)="load()" [disabled]="loading">
             {{ loading ? 'Refreshing…' : 'Refresh' }}
           </button>
         </div>
@@ -49,7 +49,7 @@ import { Complaint, ComplaintStatus } from '../../core/models';
         <div *ngIf="!loading && complaints.length > 0" class="overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="text-left text-white/50 border-b border-white/10 uppercase text-xs tracking-wide">
+              <tr class="text-left dash-text-muted border-b dash-border uppercase text-xs tracking-wide">
                 <th class="py-2 pr-4">Code</th>
                 <th class="py-2 pr-4">Name</th>
                 <th class="py-2 pr-4">Phone</th>
@@ -62,18 +62,18 @@ import { Complaint, ComplaintStatus } from '../../core/models';
             <tbody>
               <tr
                 *ngFor="let c of complaints; let i = index"
-                class="border-b border-white/5 hover:bg-white/5 transition-colors animate-fade-in-up"
+                class="border-b dash-border dash-row-hover transition-colors animate-fade-in-up"
                 [style.animation-delay.ms]="i * 30"
               >
-                <td class="py-3 pr-4 font-mono text-teal-300">{{ c.code }}</td>
-                <td class="py-3 pr-4 text-white">{{ c.name }}</td>
-                <td class="py-3 pr-4 text-white/70">{{ c.phone }}</td>
-                <td class="py-3 pr-4 text-white">{{ c.issue }}</td>
-                <td class="py-3 pr-4 text-white/70">{{ c.complaint_date }}</td>
+                <td class="py-3 pr-4 font-mono dash-code">{{ c.code }}</td>
+                <td class="py-3 pr-4 dash-text">{{ c.name }}</td>
+                <td class="py-3 pr-4 dash-text">{{ c.phone }}</td>
+                <td class="py-3 pr-4 dash-text">{{ c.issue }}</td>
+                <td class="py-3 pr-4 dash-text">{{ c.complaint_date }}</td>
                 <td class="py-3 pr-4"><app-status-badge [status]="c.status || 'Active'"></app-status-badge></td>
                 <td class="py-3 pr-4">
                   <select
-                    class="bg-white/10 border border-white/20 text-white text-xs rounded-lg px-2 py-1.5 transition-all focus:ring-2 focus:ring-teal-400/40 focus:border-teal-400"
+                    class="dash-soft border dash-border dash-text text-xs rounded-lg px-2 py-1.5 transition-all focus:ring-2 focus:ring-teal-400/40 focus:border-teal-400"
                     [ngModel]="c.status"
                     (ngModelChange)="updateStatus(c, $event)"
                   >
