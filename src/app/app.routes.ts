@@ -13,11 +13,6 @@ export const routes: Routes = [
       { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then((m) => m.LoginComponent) },
       { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then((m) => m.RegisterComponent) },
       { path: 'gov-login', loadComponent: () => import('./features/auth/gov-login/gov-login.component').then((m) => m.GovLoginComponent) },
-      { path: 'complaint', loadComponent: () => import('./features/complaint/complaint.component').then((m) => m.ComplaintComponent) },
-      { path: 'report-emergency', loadComponent: () => import('./features/report-emergency/report-emergency.component').then((m) => m.ReportEmergencyComponent) },
-      { path: 'track-complaint', loadComponent: () => import('./features/track-complaint/track-complaint.component').then((m) => m.TrackComplaintComponent) },
-      { path: 'view-complaint/:code', loadComponent: () => import('./features/view-complaint/view-complaint.component').then((m) => m.ViewComplaintComponent) },
-      { path: 'water-status', loadComponent: () => import('./features/water-status/water-status.component').then((m) => m.WaterStatusComponent) },
     ],
   },
   {
@@ -29,6 +24,29 @@ export const routes: Routes = [
         path: 'dashboard',
         canActivate: [roleGuard('citizen')],
         loadComponent: () => import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+      },
+      {
+        path: 'complaint',
+        canActivate: [roleGuard('citizen')],
+        loadComponent: () => import('./features/complaint/complaint.component').then((m) => m.ComplaintComponent),
+      },
+      {
+        path: 'report-emergency',
+        canActivate: [roleGuard('citizen')],
+        loadComponent: () => import('./features/report-emergency/report-emergency.component').then((m) => m.ReportEmergencyComponent),
+      },
+      {
+        path: 'track-complaint',
+        canActivate: [roleGuard('citizen')],
+        loadComponent: () => import('./features/track-complaint/track-complaint.component').then((m) => m.TrackComplaintComponent),
+      },
+      {
+        path: 'view-complaint/:code',
+        loadComponent: () => import('./features/view-complaint/view-complaint.component').then((m) => m.ViewComplaintComponent),
+      },
+      {
+        path: 'water-status',
+        loadComponent: () => import('./features/water-status/water-status.component').then((m) => m.WaterStatusComponent),
       },
       {
         path: 'gov-dashboard',

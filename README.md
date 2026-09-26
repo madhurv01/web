@@ -46,14 +46,21 @@ This rewrite replaces all of that with:
 
 | Area | Description |
 | --- | --- |
-| Citizen accounts | Registration and login via Supabase Auth, profile row auto-created with `role = 'citizen'` |
+| Citizen accounts | Registration and login via Supabase Auth, profile row auto-created server-side with `role = 'citizen'` |
 | Government accounts | Same auth system; a dedicated `/gov-login` route checks `role = 'government'` on the profile before granting dashboard access |
-| Complaint submission | Anonymous or logged-in; generates a unique 6-character tracking code client-side with retry-on-collision |
-| Complaint tracking | Public, no login required — looks up a complaint by code via a security-definer RPC that only exposes non-sensitive fields |
-| Emergency reporting | Same form, pre-locked to urgent issue types, styled with more visual urgency |
-| Water status page | Public aggregate stats (totals, active/resolved counts, no-supply count) via a public RPC |
-| Citizen dashboard | Personal complaint history and quick actions, gated by `authGuard` |
-| Government dashboard | Stat cards + full complaints table with inline status updates, gated by `authGuard` + a role check |
+| Complaint submission | Requires citizen login; generates a unique 6-character tracking code client-side with retry-on-collision |
+| Complaint tracking | Requires login; looks up a complaint by code via a security-definer RPC that only exposes non-sensitive fields |
+| Emergency reporting | Same form, pre-locked to urgent issue types, styled with more visual urgency, citizen-only |
+| Water status page | Aggregate stats (totals, active/resolved counts, no-supply count) via a public RPC, requires login to view |
+| Citizen dashboard | Personal complaint history and quick actions, gated by `authGuard` + `roleGuard('citizen')` |
+| Government dashboard | Stat cards + full complaints table with inline status updates, gated by `authGuard` + `roleGuard('government')` |
+
+Every route except `/`, `/about`, `/login`, `/register`, and `/gov-login` requires an authenticated
+session. The sidebar navigation is role-aware: citizens only see citizen-facing links (file
+complaint, track complaint, report emergency, water status, their dashboard) and government
+accounts only see government-facing links (their dashboard, all complaints, track, water status).
+Visiting a route that belongs to the other role redirects to that role's own dashboard rather than
+showing a blocked page.
 
 ## Project structure
 
@@ -97,7 +104,9 @@ src/app/
 Row Level Security ensures:
 
 - Citizens can only `SELECT`/`UPDATE` their own `amrit_profiles` row
-- Anyone can `INSERT` a complaint (anonymous submission is allowed, matching the original app)
+- The database's `INSERT` policy on `amrit_complaints` is permissive (it doesn't require
+  `auth.uid()`), but the app only ever reaches that code path from behind `authGuard` +
+  `roleGuard('citizen')`, so in practice a submission always carries a real citizen `user_id`
 - Citizens can only `SELECT` complaints they own (`user_id = auth.uid()`)
 - Government accounts can `SELECT` and `UPDATE` every complaint
 - Anonymous visitors never query the tables directly — only through the two RPC functions, which
@@ -145,14 +154,17 @@ way to become a government user, by design. To promote an account:
 Once you have a citizen and a government account (see above), a full smoke test looks like:
 
 1. Visit `/` and `/about` — public pages should load with no console errors.
-2. Register a citizen account at `/register`, then submit a complaint at `/complaint`.
-3. Copy the generated tracking code and look it up at `/track-complaint` in an incognito window
-   (no login) — it should resolve via the public RPC.
-4. Log in as the citizen at `/login` and confirm the complaint appears on `/dashboard`.
+2. Register a citizen account at `/register`, confirm the email if required, then log in at
+   `/login`. You should land on `/dashboard`.
+3. From the sidebar, file a complaint at `/complaint`, then copy the generated tracking code.
+4. Look it up at `/track-complaint` (still requires a logged-in session) and confirm it resolves
+   via the public RPC.
 5. Promote that same account (or a second one) to `government` per the steps above, log in at
    `/gov-login`, and confirm `/gov-dashboard` shows the complaint with the ability to change its
    status.
-6. Refresh `/water-status` and confirm the aggregate counts include the new complaint.
+6. While logged in as either role, visit `/water-status` and confirm the aggregate counts include
+   the new complaint. Then log out and confirm every one of these routes except `/`, `/about`,
+   `/login`, `/register`, and `/gov-login` redirects you to a login screen.
 
 ## Known limitations / possible follow-ups
 
