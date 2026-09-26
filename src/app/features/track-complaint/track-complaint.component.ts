@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 import { SupabaseService } from '../../core/supabase.service';
 import { Complaint } from '../../core/models';
 
 @Component({
   selector: 'app-track-complaint',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent, StatusBadgeComponent],
+  imports: [CommonModule, FormsModule, CardComponent, StatusBadgeComponent, BackButtonComponent],
   template: `
     <section class="max-w-2xl mx-auto px-4 py-16">
+      <app-back-button></app-back-button>
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-white mb-2">Track Your Complaint</h1>
         <p class="text-white/60">Enter your 6-character complaint code to check its status.</p>
@@ -27,16 +29,20 @@ import { Complaint } from '../../core/models';
             placeholder="X7Y8Z9"
           />
           <button class="btn-primary whitespace-nowrap" (click)="track()" [disabled]="loading">
+            @if (loading) {
+              <span class="spinner"></span>
+            }
             {{ loading ? 'Searching…' : 'Track' }}
           </button>
         </div>
 
         <div class="mt-6" *ngIf="searched">
-          <div *ngIf="!result" class="text-center text-white/60 py-6">
-            No complaint found with this code.
+          <div *ngIf="!result" class="empty-state">
+            <span class="text-4xl mb-3">🔍</span>
+            <p>No complaint found with this code. Double-check and try again.</p>
           </div>
 
-          <div *ngIf="result" class="space-y-3 text-sm">
+          <div *ngIf="result" class="space-y-3 text-sm animate-fade-in-up">
             <div class="flex justify-between border-b border-white/10 pb-2">
               <span class="text-white/50">Code</span><span class="text-white font-mono">{{ result.code }}</span>
             </div>

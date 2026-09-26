@@ -6,11 +6,13 @@ import { TopbarComponent } from '../../components/topbar/topbar.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { SupabaseService } from '../../../core/supabase.service';
 import { Profile } from '../../../core/models';
+import { routeAnimation } from '../../animations/route.animations';
 
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
   imports: [RouterOutlet, NgIf, TopbarComponent, SidebarComponent],
+  animations: [routeAnimation],
   template: `
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-navy-950 via-navy-900 to-[#0a1f2e]">
       <app-topbar
@@ -32,8 +34,8 @@ import { Profile } from '../../../core/models';
             <app-sidebar [role]="profile?.role || 'citizen'"></app-sidebar>
           </div>
         </div>
-        <main class="flex-1 min-w-0 overflow-y-auto p-4 md:p-8">
-          <router-outlet />
+        <main class="flex-1 min-w-0 overflow-y-auto p-4 md:p-8" [@routeAnimation]="o.isActivated ? o.activatedRoute : ''">
+          <router-outlet #o="outlet" />
         </main>
       </div>
     </div>

@@ -24,6 +24,29 @@ html, body {
   border-radius: 8px;
 }
 
+.auth-bg {
+  position: relative;
+  background-image:
+    linear-gradient(135deg, rgba(6, 20, 40, 0.88) 0%, rgba(8, 30, 45, 0.75) 45%, rgba(6, 20, 40, 0.92) 100%),
+    url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=2400&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.water-droplet-model {
+  filter: hue-rotate(150deg) saturate(1.4) drop-shadow(0 20px 40px rgba(45, 212, 191, 0.35));
+}
+
+.auth-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(45, 212, 191, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.12), transparent 50%);
+  pointer-events: none;
+}
+
 .glass-card {
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -48,3 +71,66 @@ html, body {
 .field-error {
   @apply text-red-400 text-sm mt-1;
 }
+
+/* Hide the native cursor on fine-pointer devices; app-cursor-fx replaces it. */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* Card hover-lift, used on stat cards / list cards across feature pages */
+.hover-lift {
+  @apply transition-all duration-200;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Branded skeleton loader, replaces bare "Loading..." text */
+.skeleton {
+  @apply relative overflow-hidden rounded-xl bg-white/5;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.15), transparent);
+    animation: skeleton-shimmer 1.4s infinite;
+  }
+}
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.spinner {
+  @apply inline-block w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin;
+}
+
+/* Empty state block for tables/lists with no data */
+.empty-state {
+  @apply flex flex-col items-center justify-center text-center py-16 px-6 text-white/50;
+}
+
+/* Fade-in-up utility for staggered list/card entrances */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Utility to stagger children: combine with inline style for --i index, e.g.
+   [style.animation-delay]="i * 40 + 'ms'" alongside .animate-fade-in-up */
+

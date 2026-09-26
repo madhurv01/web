@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
+  imports: [BackButtonComponent],
   template: `
     <section class="max-w-4xl mx-auto px-4 py-16 space-y-10">
+      <app-back-button></app-back-button>
       <div class="text-center">
         <h1 class="text-4xl font-bold text-white mb-3">Amrit Yatra</h1>
         <p class="text-teal-300 text-lg">Flowing Toward Pure Water for All</p>

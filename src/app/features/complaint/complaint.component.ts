@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComplaintFormComponent } from '../../shared/components/complaint-form/complaint-form.component';
 import { CardComponent } from '../../shared/components/card/card.component';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 import { SupabaseService } from '../../core/supabase.service';
 
 @Component({
   selector: 'app-complaint',
   standalone: true,
-  imports: [ComplaintFormComponent, CardComponent],
+  imports: [ComplaintFormComponent, CardComponent, BackButtonComponent],
   template: `
     <section class="max-w-2xl mx-auto px-4 py-12">
+      <app-back-button></app-back-button>
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-white mb-2">File a Water Sanitation Complaint</h1>
         <p class="text-white/60">Tell us what's wrong — we'll route it to your local authority.</p>

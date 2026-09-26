@@ -3,16 +3,21 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 import { SupabaseService } from '../../core/supabase.service';
 import { Complaint } from '../../core/models';
 
 @Component({
   selector: 'app-view-complaint',
   standalone: true,
-  imports: [CommonModule, RouterLink, CardComponent, StatusBadgeComponent],
+  imports: [CommonModule, RouterLink, CardComponent, StatusBadgeComponent, BackButtonComponent],
   template: `
     <section class="max-w-2xl mx-auto px-4 py-12">
-      <div *ngIf="loading" class="text-center text-white/60">Loading complaint…</div>
+      <app-back-button fallbackRoute="/track-complaint"></app-back-button>
+      <div *ngIf="loading" class="space-y-3">
+        <div class="skeleton h-8 w-1/2 mx-auto"></div>
+        <div class="skeleton h-40 w-full"></div>
+      </div>
 
       <div *ngIf="!loading && !complaint" class="text-center">
         <app-card [narrow]="true">

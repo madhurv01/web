@@ -16,19 +16,34 @@ import { Complaint, ComplaintStatus } from '../../core/models';
       <p class="text-white/60 mb-8">Manage and resolve citizen-reported water complaints.</p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <app-stat-card label="Total Complaints" [value]="complaints.length" icon="📋" gradient="from-teal-500 to-cyan-500"></app-stat-card>
-        <app-stat-card label="Active" [value]="countByStatus('Active')" icon="⏳" gradient="from-amber-500 to-orange-500"></app-stat-card>
-        <app-stat-card label="Resolved" [value]="countByStatus('Resolved')" icon="✅" gradient="from-green-500 to-emerald-500"></app-stat-card>
-        <app-stat-card label="No Water Supply" [value]="countNoWater()" icon="🚱" gradient="from-red-500 to-rose-500"></app-stat-card>
+        <div class="animate-fade-in-up hover-lift" style="animation-delay: 0ms">
+          <app-stat-card label="Total Complaints" [value]="complaints.length" icon="📋" gradient="from-teal-500 to-cyan-500"></app-stat-card>
+        </div>
+        <div class="animate-fade-in-up hover-lift" style="animation-delay: 60ms">
+          <app-stat-card label="Active" [value]="countByStatus('Active')" icon="⏳" gradient="from-amber-500 to-orange-500"></app-stat-card>
+        </div>
+        <div class="animate-fade-in-up hover-lift" style="animation-delay: 120ms">
+          <app-stat-card label="Resolved" [value]="countByStatus('Resolved')" icon="✅" gradient="from-green-500 to-emerald-500"></app-stat-card>
+        </div>
+        <div class="animate-fade-in-up hover-lift" style="animation-delay: 180ms">
+          <app-stat-card label="No Water Supply" [value]="countNoWater()" icon="🚱" gradient="from-red-500 to-rose-500"></app-stat-card>
+        </div>
       </div>
 
       <div class="glass-card p-6">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-white font-semibold text-lg">All Complaints</h2>
-          <button class="text-teal-300 text-sm hover:underline" (click)="load()">Refresh</button>
+          <button class="text-teal-300 text-sm hover:underline transition-colors" (click)="load()" [disabled]="loading">
+            {{ loading ? 'Refreshing…' : 'Refresh' }}
+          </button>
         </div>
 
-        <div *ngIf="loading" class="text-white/50 text-sm">Loading…</div>
+        <div *ngIf="loading" class="space-y-2">
+          <div class="skeleton h-10 w-full"></div>
+          <div class="skeleton h-10 w-full"></div>
+          <div class="skeleton h-10 w-full"></div>
+          <div class="skeleton h-10 w-full"></div>
+        </div>
         <div *ngIf="errorMessage" class="field-error">{{ errorMessage }}</div>
 
         <div *ngIf="!loading && complaints.length > 0" class="overflow-x-auto">
@@ -45,7 +60,11 @@ import { Complaint, ComplaintStatus } from '../../core/models';
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let c of complaints" class="border-b border-white/5 hover:bg-white/5">
+              <tr
+                *ngFor="let c of complaints; let i = index"
+                class="border-b border-white/5 hover:bg-white/5 transition-colors animate-fade-in-up"
+                [style.animation-delay.ms]="i * 30"
+              >
                 <td class="py-3 pr-4 font-mono text-teal-300">{{ c.code }}</td>
                 <td class="py-3 pr-4 text-white">{{ c.name }}</td>
                 <td class="py-3 pr-4 text-white/70">{{ c.phone }}</td>
@@ -54,7 +73,7 @@ import { Complaint, ComplaintStatus } from '../../core/models';
                 <td class="py-3 pr-4"><app-status-badge [status]="c.status || 'Active'"></app-status-badge></td>
                 <td class="py-3 pr-4">
                   <select
-                    class="bg-white/10 border border-white/20 text-white text-xs rounded-lg px-2 py-1.5"
+                    class="bg-white/10 border border-white/20 text-white text-xs rounded-lg px-2 py-1.5 transition-all focus:ring-2 focus:ring-teal-400/40 focus:border-teal-400"
                     [ngModel]="c.status"
                     (ngModelChange)="updateStatus(c, $event)"
                   >
@@ -69,7 +88,10 @@ import { Complaint, ComplaintStatus } from '../../core/models';
           </table>
         </div>
 
-        <div *ngIf="!loading && complaints.length === 0" class="text-white/50 text-sm">No complaints found.</div>
+        <div *ngIf="!loading && complaints.length === 0" class="empty-state !py-10">
+          <span class="text-4xl mb-3">📭</span>
+          <p>No complaints found.</p>
+        </div>
       </div>
     </div>
   `,

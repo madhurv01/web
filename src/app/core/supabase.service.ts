@@ -48,17 +48,24 @@ export class SupabaseService {
 
   // ---------- Auth ----------
 
+  /**
+   * The `amrit_profiles` row is created server-side by a database trigger on
+   * `auth.users` (see migration `amrit_profile_auto_create_trigger`), fed by
+   * this signup's `options.data`. That trigger runs with elevated privilege,
+   * so it works even when email confirmation is required and no session
+   * exists yet on the client right after signup (RLS would otherwise block a
+   * client-side insert with no authenticated `auth.uid()`).
+   */
   async signUp(email: string, password: string, name: string, role: 'citizen' | 'government' = 'citizen') {
-    const { data, error } = await this.client.auth.signUp({ email, password });
+    const { data, error } = await this.client.auth.signUp({
+      email,
+      password,
+      options: { data: { name, role } },
+    });
     if (error) throw error;
 
-    const userId = data.user?.id;
-    if (userId) {
-      const { error: profileError } = await this.client
-        .from('amrit_profiles')
-        .insert({ id: userId, name, role });
-      if (profileError) throw profileError;
-      await this.loadProfile(userId);
+    if (data.session && data.user) {
+      await this.loadProfile(data.user.id);
     }
     return data;
   }

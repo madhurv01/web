@@ -17,22 +17,22 @@ import { Complaint, Profile } from '../../core/models';
       <p class="text-white/60 mb-8">Here's a quick overview of your account.</p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <a routerLink="/complaint" class="glass-card p-6 hover:-translate-y-1 transition-transform block">
+        <a routerLink="/complaint" class="glass-card p-6 hover-lift block animate-fade-in-up" style="animation-delay: 0ms">
           <div class="text-3xl mb-3">📝</div>
           <h3 class="text-white font-semibold mb-1">File Complaint</h3>
           <p class="text-white/50 text-sm">Report a water issue</p>
         </a>
-        <a routerLink="/track-complaint" class="glass-card p-6 hover:-translate-y-1 transition-transform block">
+        <a routerLink="/track-complaint" class="glass-card p-6 hover-lift block animate-fade-in-up" style="animation-delay: 60ms">
           <div class="text-3xl mb-3">🔍</div>
           <h3 class="text-white font-semibold mb-1">Track Complaint</h3>
           <p class="text-white/50 text-sm">Check status by code</p>
         </a>
-        <a routerLink="/report-emergency" class="glass-card p-6 hover:-translate-y-1 transition-transform block">
+        <a routerLink="/report-emergency" class="glass-card p-6 hover-lift block animate-fade-in-up" style="animation-delay: 120ms">
           <div class="text-3xl mb-3">🚨</div>
           <h3 class="text-white font-semibold mb-1">Report Emergency</h3>
           <p class="text-white/50 text-sm">No water supply? Escalate now</p>
         </a>
-        <a routerLink="/water-status" class="glass-card p-6 hover:-translate-y-1 transition-transform block">
+        <a routerLink="/water-status" class="glass-card p-6 hover-lift block animate-fade-in-up" style="animation-delay: 180ms">
           <div class="text-3xl mb-3">📈</div>
           <h3 class="text-white font-semibold mb-1">Water Status</h3>
           <p class="text-white/50 text-sm">View aggregate statistics</p>
@@ -42,10 +42,16 @@ import { Complaint, Profile } from '../../core/models';
       <div class="glass-card p-6">
         <h2 class="text-white font-semibold text-lg mb-4">My Complaints</h2>
 
-        <div *ngIf="loading" class="text-white/50 text-sm">Loading…</div>
+        <div *ngIf="loading" class="space-y-2">
+          <div class="skeleton h-10 w-full"></div>
+          <div class="skeleton h-10 w-full"></div>
+          <div class="skeleton h-10 w-full"></div>
+        </div>
 
-        <div *ngIf="!loading && complaints.length === 0" class="text-white/50 text-sm">
-          You haven't filed any complaints yet.
+        <div *ngIf="!loading && complaints.length === 0" class="empty-state !py-10">
+          <span class="text-4xl mb-3">💧</span>
+          <p>You haven't filed any complaints yet.</p>
+          <a routerLink="/complaint" class="btn-secondary mt-4">File your first complaint</a>
         </div>
 
         <div *ngIf="!loading && complaints.length > 0" class="overflow-x-auto">
@@ -59,9 +65,13 @@ import { Complaint, Profile } from '../../core/models';
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let c of complaints" class="border-b border-white/5 hover:bg-white/5">
+              <tr
+                *ngFor="let c of complaints; let i = index"
+                class="border-b border-white/5 hover:bg-white/5 transition-colors animate-fade-in-up"
+                [style.animation-delay.ms]="i * 40"
+              >
                 <td class="py-3 pr-4 font-mono text-teal-300">
-                  <a [routerLink]="['/view-complaint', c.code]">{{ c.code }}</a>
+                  <a [routerLink]="['/view-complaint', c.code]" class="hover:underline">{{ c.code }}</a>
                 </td>
                 <td class="py-3 pr-4 text-white">{{ c.issue }}</td>
                 <td class="py-3 pr-4 text-white/70">{{ c.complaint_date }}</td>

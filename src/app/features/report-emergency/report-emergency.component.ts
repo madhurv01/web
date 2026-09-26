@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComplaintFormComponent } from '../../shared/components/complaint-form/complaint-form.component';
 import { CardComponent } from '../../shared/components/card/card.component';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 import { SupabaseService } from '../../core/supabase.service';
 
 @Component({
   selector: 'app-report-emergency',
   standalone: true,
-  imports: [ComplaintFormComponent, CardComponent],
+  imports: [ComplaintFormComponent, CardComponent, BackButtonComponent],
   template: `
     <section class="max-w-2xl mx-auto px-4 py-12">
+      <app-back-button></app-back-button>
       <div class="text-center mb-8">
         <span class="inline-block px-4 py-1.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-sm font-semibold mb-4">
           🚨 Emergency Reporting

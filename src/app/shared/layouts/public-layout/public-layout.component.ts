@@ -4,16 +4,18 @@ import { Subscription } from 'rxjs';
 import { TopbarComponent } from '../../components/topbar/topbar.component';
 import { SupabaseService } from '../../../core/supabase.service';
 import { Profile } from '../../../core/models';
+import { routeAnimation } from '../../animations/route.animations';
 
 @Component({
   selector: 'app-public-layout',
   standalone: true,
   imports: [RouterOutlet, RouterLink, TopbarComponent],
+  animations: [routeAnimation],
   template: `
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-navy-950 via-[#0d1b3a] to-[#0a2438] text-white">
       <app-topbar [profile]="profile" (logout)="onLogout()"></app-topbar>
-      <main class="flex-1">
-        <router-outlet />
+      <main class="flex-1" [@routeAnimation]="o.isActivated ? o.activatedRoute : ''">
+        <router-outlet #o="outlet" />
       </main>
       <footer class="border-t border-white/10 py-8 px-4 text-center text-white/50 text-sm">
         <div class="flex flex-wrap justify-center gap-6 mb-3">
